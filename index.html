@@ -14,12 +14,19 @@
       align-items: center;
       justify-content: flex-start;
       min-height: 100vh;
+      padding: 20px;
+    }
+
+    .headline-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .headline {
       font-size: 2rem;
       font-weight: bold;
-      margin-top: 40px;
+      margin: 0;
       cursor: pointer;
       position: relative;
       perspective: 1000px;
@@ -64,17 +71,18 @@
     }
 
     .box-instructions {
-      font-size: 1.4rem;
-      margin: 20px 0 10px 0;
-      color: #8b2149;
+      font-size: 1.2rem;
       font-weight: bold;
+      margin: 30px 0 10px;
+      color: #8b2149;
+      text-align: center;
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(4, 120px);
       gap: 12px;
-      margin: 10px 0 30px 0;
+      margin: 20px 0;
       perspective: 1000px;
     }
 
@@ -122,19 +130,19 @@
   </style>
 </head>
 <body>
-  <div class="headline" onclick="flipHeadline(this)">
-    <div class="headline-inner">
-      <div class="headline-front">
-        <img src="pooch_puzzle_logo.png" />
-      </div>
-      <div class="headline-back">
-        <img src="pooch_puzzle_logo.png" />
-        <img src="hidden_pooch.png" class="hidden-pooch" id="hidden-pooch" />
+  <div class="headline-wrapper">
+    <div class="headline" onclick="flipHeadline(this)">
+      <div class="headline-inner">
+        <div class="headline-front">
+          <img src="pooch_puzzle_logo.png" />
+        </div>
+        <div class="headline-back">
+          <img src="hidden_pooch.png" class="hidden-pooch" id="hidden-pooch" />
+        </div>
       </div>
     </div>
+    <div class="box-instructions">Click to uncover what’s behind</div>
   </div>
-
-  <div class="box-instructions">Click to uncover what’s behind</div>
 
   <div class="grid" id="grid"></div>
 
