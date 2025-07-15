@@ -1,5 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Puzzle Game</title>
+  <style>
+    body {
+      background-color: #bae1cf;
+      font-family: 'Courier New', monospace;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+
+    .headline {
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 20px;
+      cursor: pointer;
+      position: relative;
+      perspective: 1000px;
+    }
+
+    .headline-inner {
+      display: inline-block;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+      position: relative;
+    }
+
+    .headline.flipped .headline-inner {
+      transform: rotateY(180deg);
+    }
+
+    .headline-front,
+    .headline-back {
+      position: absolute;
+      width: 100%;
+      backface-visibility: hidden;
+    }
+
+    .headline-front img,
+    .headline-back img {
+      width: 280px;
+      height: auto;
+    }
+
+    .headline-back {
+      transform: rotateY(180deg);
+    }
+
+    .hidden-pooch {
+      position: absolute;
+      top: 30px;
+      left: 60px;
+      width: 80px;
+      height: auto;
+      display: none;
+      z-index: 2;
+    }
 
     .box-instructions {
       font-size: 1.2rem;
@@ -66,7 +128,6 @@
       </div>
       <div class="headline-back">
         <img src="hidden_pooch.png" class="hidden-pooch" id="hidden-pooch" />
-        <img src="pooch_puzzle_logo.png" />
       </div>
     </div>
   </div>
