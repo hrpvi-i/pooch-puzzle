@@ -5,48 +5,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Puzzle Game</title>
   <style>
-    /* ---------- Global layout ---------- */
+    /* ====== Layout basics ====== */
+    * { box-sizing: border-box; }
     body {
-      background-color: #bae1cf;
+      background: #bae1cf;
       font-family: 'Courier New', monospace;
       margin: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
       padding: 40px 20px;
-      box-sizing: border-box;
+      gap: 28px;                /* space between sections */
     }
 
-    /* ---------- Flipping logo ---------- */
-    .headline {
+    /* ====== Flippable logo ====== */
+    .logo-wrapper {
       cursor: pointer;
-      perspective: 1000px;           /* enable 3‑D */
-      margin-bottom: 25px;           /* push instructions down */
+      perspective: 1000px;      /* enable 3‑D */
     }
 
-    .headline-inner {
-      width: 300px;                  /* fixed width so it has real height */
-      height: 160px;                 /* matches your logo proportion */
+    .logo-card {
+      width: 300px;             /* <- give element real size */
+      height: 160px;
       position: relative;
       transform-style: preserve-3d;
       transition: transform 0.6s;
     }
 
-    .headline.flipped .headline-inner {
+    .logo-wrapper.flipped .logo-card {
       transform: rotateY(180deg);
     }
 
-    .face {
+    .logo-face {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      inset: 0;
       backface-visibility: hidden;
     }
 
-    .face img {
+    .logo-face img {
       width: 100%;
       height: 100%;
       object-fit: contain;
@@ -55,38 +51,36 @@
 
     .back {
       transform: rotateY(180deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    /* Hidden pooch sits inside .back so it shows only on flip */
     .hidden-pooch {
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      width: 80px;
-      transform: translate(-50%, -50%);
+      width: 90px;              /* small enough to hide */
     }
 
-    /* ---------- Instructions ---------- */
-    .box-instructions {
+    /* ====== Instructions ====== */
+    .instructions {
       font-size: 1.4rem;
       font-weight: bold;
       color: #8b2149;
-      margin-bottom: 20px;
       text-align: center;
+      margin: 0;
     }
 
-    /* ---------- Grid buttons ---------- */
+    /* ====== Grid buttons ====== */
     .grid {
       display: grid;
       grid-template-columns: repeat(4, 120px);
-      gap: 14px;
+      gap: 16px;
     }
 
     .box {
       width: 120px;
       height: 120px;
-      cursor: pointer;
       perspective: 1000px;
+      cursor: pointer;
     }
 
     .box-inner {
@@ -113,7 +107,7 @@
     }
 
     .box-back {
-      background-color: #f8bbd0;
+      background: #f8bbd0;
       transform: rotateY(180deg);
       display: flex;
       align-items: center;
@@ -124,27 +118,23 @@
   </style>
 </head>
 <body>
-  <!--  Logo / Pooch flipper  -->
-  <div class="headline" onclick="flipHeadline(this)">
-    <div class="headline-inner">
-      <div class="face front">
-        <img src="pooch_puzzle_logo.png" alt="" />
-      </div>
-      <div class="face back">
-        <img src="pooch_puzzle_logo.png" alt="" />
+  <!--  Logo / hidden pooch  -->
+  <div class="logo-wrapper" onclick="this.classList.toggle('flipped')">
+    <div class="logo-card">
+      <div class="logo-face front"><img src="pooch_puzzle_logo.png" alt="" /></div>
+      <div class="logo-face back">
         <img src="hidden_pooch.png" class="hidden-pooch" alt="" />
       </div>
     </div>
   </div>
 
   <!--  Instructions  -->
-  <div class="box-instructions">Click to uncover what’s behind</div>
+  <p class="instructions">Click to uncover what’s behind</p>
 
-  <!--  Grid of boxes  -->
+  <!--  Grid  -->
   <div class="grid" id="grid"></div>
 
   <script>
-    /* ---------- Build grid ---------- */
     const grid = document.getElementById('grid');
 
     for (let i = 0; i < 12; i++) {
@@ -169,11 +159,6 @@
         document.querySelectorAll('.box').forEach(b => b.classList.remove('flipped'));
         box.classList.add('flipped');
       });
-    }
-
-    /* ---------- Flip logo handler ---------- */
-    function flipHeadline(el) {
-      el.classList.toggle('flipped');
     }
   </script>
 </body>
