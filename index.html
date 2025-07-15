@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Puzzle Game</title>
+  <style>
+    body {
+      background-color: #bae1cf;
+      font-family: 'Courier New', monospace;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+
+    .headline {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-top: 40px;
+      cursor: pointer;
+      position: relative;
+      perspective: 1000px;
+    }
+
+    .headline-inner {
+      display: inline-block;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+      position: relative;
+    }
+
+    .headline.flipped .headline-inner {
+      transform: rotateY(180deg);
+    }
+
+    .headline-front,
+    .headline-back {
+      position: absolute;
+      width: 100%;
+      backface-visibility: hidden;
+    }
+
+    .headline-front img,
+    .headline-back img {
+      width: 280px;
+      height: auto;
+    }
+
+    .headline-back {
+      transform: rotateY(180deg);
+    }
+
+    .hidden-pooch {
+      position: absolute;
+      top: 30px;
+      left: 60px;
+      width: 80px;
+      height: auto;
+      display: none;
+      z-index: 2;
+    }
+
+    .box-instructions {
+      font-size: 1.4rem;
+      margin: 20px 0 10px 0;
+      color: #8b2149;
+      font-weight: bold;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 120px);
+      gap: 12px;
+      margin: 10px 0 30px 0;
+      perspective: 1000px;
+    }
+
+    .box {
+      width: 120px;
+      height: 120px;
+      cursor: pointer;
+      perspective: 1000px;
+    }
+
+    .box-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+
+    .box.flipped .box-inner {
+      transform: rotateY(180deg);
+    }
+
+    .box-front,
+    .box-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backface-visibility: hidden;
+      border-radius: 6px;
+    }
+
+    .box-front {
+      background: url("button.png") no-repeat center/cover;
+    }
+
+    .box-back {
+      background-color: #f8bbd0;
+      transform: rotateY(180deg);
+      font-weight: bold;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="headline" onclick="flipHeadline(this)">
+    <div class="headline-inner">
+      <div class="headline-front">
+        <img src="pooch_puzzle_logo.png" />
+      </div>
+      <div class="headline-back">
+        <img src="pooch_puzzle_logo.png" />
+        <img src="hidden_pooch.png" class="hidden-pooch" id="hidden-pooch" />
+      </div>
+    </div>
+  </div>
+
+  <div class="box-instructions">Click to uncover what’s behind</div>
+
+  <div class="grid" id="grid"></div>
+
+  <script>
+    const grid = document.getElementById('grid');
+    const hiddenPooch = document.getElementById('hidden-pooch');
+
+    for (let i = 0; i < 12; i++) {
+      const box = document.createElement('div');
+      box.classList.add('box');
+
+      const inner = document.createElement('div');
+      inner.classList.add('box-inner');
+
+      const front = document.createElement('div');
+      front.classList.add('box-front');
+
+      const back = document.createElement('div');
+      back.classList.add('box-back');
+      back.textContent = 'Empty';
+
+      inner.appendChild(front);
+      inner.appendChild(back);
+      box.appendChild(inner);
+
+      box.addEventListener('click', () => {
+        document.querySelectorAll('.box').forEach(b => b.classList.remove('flipped'));
+        box.classList.add('flipped');
+      });
+
+      grid.appendChild(box);
+    }
+
+    function flipHeadline(el) {
+      el.classList.toggle('flipped');
+      hiddenPooch.style.display = el.classList.contains('flipped') ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>
