@@ -16,29 +16,6 @@
       min-height: 100vh;
     }
 
-    .logo {
-      position: relative;
-      width: 240px;
-      height: auto;
-      margin: 20px;
-      cursor: pointer;
-    }
-
-    .logo img {
-      width: 100%;
-      height: auto;
-    }
-
-    .hidden-image {
-      position: absolute;
-      top: 60px;
-      left: 60px;
-      width: 120px;
-      height: auto;
-      display: none;
-      z-index: 2;
-    }
-
     .headline {
       font-size: 2rem;
       font-weight: bold;
@@ -76,22 +53,33 @@
       transform: rotateY(180deg);
     }
 
+    .hidden-pooch {
+      position: absolute;
+      top: 30px;
+      left: 60px;
+      width: 80px;
+      height: auto;
+      display: none;
+      z-index: 2;
+    }
+
     .box-instructions {
-      font-size: 1rem;
+      font-size: 1.2rem;
       margin: 10px;
+      color: #8b2149;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(4, 80px);
-      gap: 10px;
+      grid-template-columns: repeat(4, 120px);
+      gap: 12px;
       margin: 30px 0;
       perspective: 1000px;
     }
 
     .box {
-      width: 80px;
-      height: 80px;
+      width: 120px;
+      height: 120px;
       cursor: pointer;
       perspective: 1000px;
     }
@@ -139,14 +127,10 @@
         <img src="pooch_puzzle_logo.png" />
       </div>
       <div class="headline-back">
-        <img src="hidden_pooch.png" />
+        <img src="hidden_pooch.png" class="hidden-pooch" id="hidden-pooch" />
+        <img src="pooch_puzzle_logo.png" />
       </div>
     </div>
-  </div>
-
-  <div class="logo" onclick="revealHiddenImage()">
-    <img src="pooch_puzzle_logo.png" />
-    <img class="hidden-image" id="hiddenImage" src="hidden_pooch.png" />
   </div>
 
   <div class="box-instructions">Click to uncover what’s behind</div>
@@ -155,7 +139,7 @@
 
   <script>
     const grid = document.getElementById('grid');
-    const hiddenImage = document.getElementById('hiddenImage');
+    const hiddenPooch = document.getElementById('hidden-pooch');
 
     for (let i = 0; i < 12; i++) {
       const box = document.createElement('div');
@@ -183,12 +167,9 @@
       grid.appendChild(box);
     }
 
-    function revealHiddenImage() {
-      hiddenImage.style.display = 'block';
-    }
-
     function flipHeadline(el) {
       el.classList.toggle('flipped');
+      hiddenPooch.style.display = el.classList.contains('flipped') ? 'block' : 'none';
     }
   </script>
 </body>
